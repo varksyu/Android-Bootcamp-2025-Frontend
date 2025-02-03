@@ -1,6 +1,7 @@
 package ru.sicampus.bootcamp2025.ui.centerList
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -32,6 +33,7 @@ class CenterListFragment : Fragment(R.layout.fragment_center_list) {
             when(state) {
                 is CenterListViewModel.State.Loading -> Unit
                 is CenterListViewModel.State.Show -> {
+                    Log.d("itemsInFragment", "${state.items.toString()}")
                     adapter.submitList(state.items)
                 }
                 is CenterListViewModel.State.Error -> {
