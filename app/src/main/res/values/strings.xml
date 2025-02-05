@@ -20,6 +20,7 @@
     <string name="centers">Центры</string>
     <string name="volunteers">Волонтёры</string>
     <string name="saving">Сохранить</string>
+    <string name="error_user_not_exist">Пользователя с таким логином не существует</string>
 
 
 </resources>
