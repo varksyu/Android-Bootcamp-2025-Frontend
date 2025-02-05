@@ -11,39 +11,57 @@ import kotlinx.coroutines.launch
 import ru.sicampus.bootcamp2025.R
 import ru.sicampus.bootcamp2025.data.center.CenterNetworkDataSource
 import ru.sicampus.bootcamp2025.data.center.CenterRepoImpl
+import ru.sicampus.bootcamp2025.domain.auth.IsUserExistUseCase
+import ru.sicampus.bootcamp2025.domain.auth.LoginUseCase
 import ru.sicampus.bootcamp2025.domain.center.GetCentersUseCase
 import ru.sicampus.bootcamp2025.ui.centerList.CenterListViewModel
 
 class AuthViewModel(
-    private val application: Application
+    private val application: Application,
+    private val isUserExistUseCase: IsUserExistUseCase,
+    private  val loginUseCase: LoginUseCase
 ) : AndroidViewModel(application = application) {
-    private val _state = MutableStateFlow<State>(State.Loading)
+    private val _state = MutableStateFlow<State>(getStateShow())
     val state = _state.asStateFlow()
 
-    private var isNewUser = false
+    private var isNewUser : Boolean? = null
+
 
     init {
-        updateState()
+        viewModelScope.launch {
+            updateState()
+        }
+
     }
-    fun clickNext(
+    fun auth(
         login : String,
         password : String
-    ) {
+    )
+    {
         viewModelScope.launch {
-            _state.emit(
-                State.Show(
-                    errorText = when (isNewUser) {
-                        false -> null
-                        true -> getApplication<Application>().getString(R.string.error_user_not_exist)
-                    }
-                )
-            )
 
         }
     }
 
-    private fun updateState() {
+    fun changeLogin() {
+        isNewUser = null
+        viewModelScope.launch {
+            updateState()
+        }
+    }
 
+    private suspend fun updateState() {
+        _state.emit(getStateShow())
+    }
+
+    private fun getStateShow() : State {
+        return State.Show(
+            errorText = when (isNewUser) {
+                false -> null
+                true -> getApplication<Application>().getString(R.string.error_user_not_exist)
+                null -> null
+            }
+        )
     }
 
 
