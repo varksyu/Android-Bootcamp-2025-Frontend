@@ -4,6 +4,6 @@ class LoginUseCase(
     private val authRepo : AuthRepo
 ){
     suspend operator fun invoke(login : String, password : String) : Result<Unit> {
-        return authRepo.isRegister(login, password)
+        return authRepo.login(login, password)
     }
 }

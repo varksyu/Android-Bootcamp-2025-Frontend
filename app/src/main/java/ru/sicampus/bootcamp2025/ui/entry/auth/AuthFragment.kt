@@ -1,4 +1,4 @@
-package ru.sicampus.bootcamp2025.ui.auth
+package ru.sicampus.bootcamp2025.ui.entry.auth
 
 import android.os.Bundle
 import android.text.Editable
@@ -7,6 +7,7 @@ import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ru.sicampus.bootcamp2025.R
 import ru.sicampus.bootcamp2025.databinding.FragmentAuthBinding
 import ru.sicampus.bootcamp2025.utils.collectWithLifecycle
@@ -21,12 +22,17 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _viewBinding = FragmentAuthBinding.bind(view)
 
-        viewBinding.button.setOnClickListener {
+        viewBinding.goToRegisterButton.setOnClickListener {
+            findNavController().navigate(R.id.action_auth_to_register)
+        }
+
+        viewBinding.signInButton.setOnClickListener {
             viewModel.auth(viewBinding.userLogin.toString(), viewBinding.userPassword.toString())
         }
 
         viewModel.state.collectWithLifecycle(this) { state ->
             if (state is AuthViewModel.State.Show) {
+                viewBinding.errorText.text = state.errorText.toString()
                 viewBinding.errorText.visibility =
                     if (state.errorText == null)  View.GONE else View.VISIBLE
             }

@@ -12,18 +12,10 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import ru.sicampus.bootcamp2025.data.Network.client
 import ru.sicampus.bootcamp2025.data.center.CenterDto
 
 class UserNetworkDataSource {
-
-    private  val client = HttpClient(CIO) {
-        install(ContentNegotiation) {
-            json(Json {
-                isLenient = true
-                ignoreUnknownKeys = true
-            })
-        }
-    }
     suspend fun getUser(id : Int): Result<UserDto> = withContext(Dispatchers.IO) {
         runCatching {
             Log.d("Zapros", "начал отправлять запросы")

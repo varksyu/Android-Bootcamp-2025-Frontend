@@ -21,6 +21,10 @@
     <string name="volunteers">Волонтёры</string>
     <string name="saving">Сохранить</string>
     <string name="error_user_not_exist">Пользователя с таким логином не существует</string>
+    <string name="error_user_exist">Пользователь с таким email уже существует</string>
+    <string name="error_name_no_valid">Имя может содержать только буквы и пробелы</string>
+    <string name="error_email_no_valid">Некорректный email</string>
+    <string name="error_password_no_valid">Пароль должен содержать более 8 символов</string>
 
 
 </resources>

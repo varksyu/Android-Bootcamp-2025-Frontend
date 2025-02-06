@@ -5,6 +5,7 @@
     android:id="@+id/main_nav_graph.xml"
     app:startDestination="@id/profile_view_button">
 
+
     <fragment
         tools:layout="@layout/fragment_center_list"
         android:id="@+id/center_view_button"
