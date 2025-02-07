@@ -8,7 +8,7 @@
 
     <fragment
         tools:layout="@layout/fragment_center_list"
-        android:id="@+id/center_view_button"
+        android:id="@+id/fragment_center_list"
         android:name="ru.sicampus.bootcamp2025.ui.centerList.CenterListFragment"
         android:label="CenterList" />
     <fragment
@@ -18,9 +18,9 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/fragment_user_list"
-        android:name="ru.sicampus.bootcamp2025.ui.userList.FragmentFreeVolounteersListFragment"
+        android:name="ru.sicampus.bootcamp2025.ui.userList.FreeVolunteersListFragment"
         android:label="UserList"
-        tools:layout="@layout/fragment_free_volounteers_list" />
+        tools:layout="@layout/fragment_free_volunteers_list" />
 
 
 </navigation>

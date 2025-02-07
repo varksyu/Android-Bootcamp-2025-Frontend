@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.sicampus.bootcamp2025.data.auth.AuthStorageDataSource
 import ru.sicampus.bootcamp2025.data.center.CenterNetworkDataSource
 import ru.sicampus.bootcamp2025.data.center.CenterRepoImpl
 import ru.sicampus.bootcamp2025.data.user.UserNetworkDataSource
@@ -67,7 +68,8 @@ class ProfileViewModel(
                     getUserUseCase = GetUserUseCase(
                         repo = UserRepoImpl(
                             userNetworkDataSource = UserNetworkDataSource()
-                        )
+                        ),
+                        authStorageDataSource = AuthStorageDataSource
                     )
                 ) as T
             }

@@ -37,9 +37,8 @@ class MainActivity : AppCompatActivity() {
             navController.setGraph(R.navigation.main_admin_nav_graph)
         }
 
-        // Настроить связь между навигацией и BottomNavigationView
-        bottomNavigationView.setupWithNavController(navController)
 
         bottomNavigationView.setupWithNavController(navController)
+
     }
 }

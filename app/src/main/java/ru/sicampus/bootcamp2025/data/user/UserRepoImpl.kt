@@ -6,7 +6,7 @@ import ru.sicampus.bootcamp2025.domain.user.UserRepo
 class UserRepoImpl (
     private val userNetworkDataSource: UserNetworkDataSource
 ) : UserRepo {
-    override suspend fun getUser(id: Int): Result<UserEntity> {
+    override suspend fun getUser(id: Long?): Result<UserEntity> {
         return userNetworkDataSource.getUser(id).map { dto ->
             UserEntity(
                 id = dto.id ?: -1,

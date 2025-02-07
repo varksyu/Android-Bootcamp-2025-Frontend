@@ -11,6 +11,7 @@ import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.gms.location.LocationServices
 import ru.sicampus.bootcamp2025.R
 import ru.sicampus.bootcamp2025.databinding.FragmentCenterListBinding
 import ru.sicampus.bootcamp2025.utils.collectWithLifecycle
@@ -75,6 +76,32 @@ class CenterListFragment : Fragment(R.layout.fragment_center_list) {
         }
 
 
+    }
+
+
+    private fun getLocation() {
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        // Местоположение получено, отправляем его в ViewModel
+                        val latitude = location.latitude
+                        val longitude = location.longitude
+                        viewModel.setLocation(latitude, longitude)
+                    } else {
+                        Toast.makeText(requireContext(), "Location not available", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "Failed to get location: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     override fun onDestroyView() {

@@ -9,7 +9,7 @@
     <string name="sign_up">Зарегистрироваться</string>
     <string name="text_about_sign_in">Уже есть аккаунт?</string>
     <string name="text_about_sign_up">Ещё нет аккаунта?</string>
-    <string name="password_hint">Пароль должен содержать более 8 символов</string>
+    <string name="password_hint">Пароль должен содержать минимум 8 символов</string>
     <string name="editing">Редактировать</string>
     <string name="my_center">Мой центр</string>
     <string name="date">Дата рождения</string>

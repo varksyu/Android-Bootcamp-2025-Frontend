@@ -13,9 +13,9 @@ import ru.sicampus.bootcamp2025.data.Network.client
 import ru.sicampus.bootcamp2025.data.auth.AuthStorageDataSource.token
 
 class UserNetworkDataSource {
-    suspend fun getUser(id : Int): Result<UserDto> = withContext(Dispatchers.IO) {
+    suspend fun getUser(id: Long?): Result<UserDto> = withContext(Dispatchers.IO) {
         runCatching {
-            Log.d("Zapros", "начал отправлять запросы")
+            Log.d("Zapros", "начал отправлять запросы ${id}")
             val result = client.get("http://10.0.2.2:8081/api/user/${id}") {
                 header(HttpHeaders.Authorization, token)
             }

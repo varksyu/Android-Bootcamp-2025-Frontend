@@ -26,11 +26,19 @@ class CenterListViewModel(
         updateState()
     }
 
+    private var latitude: Double? = null
+    private var longitude: Double? = null
+    fun setLocation(latitude: Double, longitude: Double) {
+        this.latitude = latitude
+        this.longitude = longitude
+        updateState()
+    }
+
     private fun updateState() {
         viewModelScope.launch {
             _state.emit(State.Loading)
             _state.emit(
-                getCentersUseCase.invoke().fold(
+                getCentersUseCase.invoke(/*latitude, longitude*/).fold(
                     onSuccess = { data ->
                         Log.d("uraa", "успех успех ${data.toString()}")
                         State.Show(data)
