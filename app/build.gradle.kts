@@ -41,6 +41,7 @@ android {
 
 dependencies {
 
+    implementation(libs.okhttp)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.core.ktx)

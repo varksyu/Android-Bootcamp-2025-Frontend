@@ -9,12 +9,6 @@ data class AuthRegisterDto(
     var email : String?,
     @SerialName("password")
     var password : String?,
-    @SerialName("birthDate")
-    var birthDate : String?,
     @SerialName("name")
     var name : String?,
-    @SerialName("description")
-    var description : String?,
-    @SerialName("avatarUrl")
-    var avatarUrl : String?
 )

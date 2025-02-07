@@ -12,9 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.sicampus.bootcamp2025.MainActivity
 import ru.sicampus.bootcamp2025.R
-import ru.sicampus.bootcamp2025.databinding.FragmentAuthBinding
 import ru.sicampus.bootcamp2025.databinding.FragmentRegisterBinding
-import ru.sicampus.bootcamp2025.ui.entry.auth.AuthViewModel
 import ru.sicampus.bootcamp2025.utils.collectWithLifecycle
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
@@ -33,9 +31,9 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         }
 
         viewBinding.signInButton.setOnClickListener {
-            val email = viewBinding.email.toString()
-            val password = viewBinding.password.toString()
-            val name = viewBinding.name.toString()
+            val email = viewBinding.email.text.toString()
+            val password = viewBinding.password.text.toString()
+            val name = viewBinding.name.text.toString()
             if (!isValidName(name)) {
                 viewBinding.errorText.text = getString(R.string.error_name_no_valid)
                 viewBinding.errorText.visibility = View.VISIBLE
@@ -44,7 +42,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 viewBinding.errorText.text = getString(R.string.error_email_no_valid)
                 viewBinding.errorText.visibility = View.VISIBLE
             }
-            else if (!isValidPassword(email)) {
+            else if (!isValidPassword(password)) {
                 viewBinding.errorText.text = getString(R.string.error_password_no_valid)
                 viewBinding.errorText.visibility = View.VISIBLE
             }
@@ -83,7 +81,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
     private fun isValidPassword(password : String) : Boolean {
-        return password.length > 8
+        return password.length >= 8
     }
     private fun isValidName(name: String): Boolean {
         return name.all { it.isLetter() || it.isWhitespace() }
