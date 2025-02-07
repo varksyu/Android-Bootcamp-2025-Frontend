@@ -2,12 +2,13 @@ package ru.sicampus.bootcamp2025.data.auth
 
 import okhttp3.Credentials
 
+
 object AuthStorageDataSource {
     var token: String? = null
         private set
 
-    fun updateToken(login : String, password : String) : String {
-        val updateToken = Credentials.basic(login, password)
+    fun updateToken(email : String, password : String) : String {
+        val updateToken = Credentials.basic(email, password)
         token = updateToken
         return updateToken
     }

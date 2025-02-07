@@ -8,7 +8,7 @@ data class UserDto(
     @SerialName("id")
     val id : Long?,
     @SerialName("email")
-    var email: String?,
+    var email: String,
     @SerialName("birthDate")
     var birthDate : String?,
     @SerialName("name")
@@ -25,6 +25,6 @@ data class UserDto(
     var center : String?,
     /*@SerialName("centerDescription")
     var centerDescription : String?,*/
-    @SerialName("adminRights")
-    val adminRights : Boolean?
+    @SerialName("authorities")
+    val authorities : String
 )

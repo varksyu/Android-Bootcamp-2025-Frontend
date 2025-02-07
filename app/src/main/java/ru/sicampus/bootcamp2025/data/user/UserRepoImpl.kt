@@ -11,14 +11,14 @@ class UserRepoImpl (
         return userNetworkDataSource.getUser(id).map { dto ->
             UserEntity(
                 id = dto.id ?: -1,
-                email = dto.email ?: "",
+                email = dto.email,
                 birthDate = dto.birthDate ?: "",
-                name = dto.name ?: "",
+                name = dto.name,
                 description = dto.description ?: "",
                 avatarUrl = dto.avatarUrl ?: "",
                 center = dto.center ?: "",
+                authorities = dto.authorities
                 //centerDescription = dto.centerDescription ?: "",
-                adminRights = dto.adminRights ?: false
                 )
 
             }

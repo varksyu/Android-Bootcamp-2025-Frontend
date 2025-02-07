@@ -1,13 +1,13 @@
 package ru.sicampus.bootcamp2025.ui.entry.register
 
 import android.app.Application
-import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -16,21 +16,19 @@ import ru.sicampus.bootcamp2025.data.auth.AuthNetworkDataSource
 import ru.sicampus.bootcamp2025.data.auth.AuthRepoImpl
 import ru.sicampus.bootcamp2025.data.auth.AuthStorageDataSource
 import ru.sicampus.bootcamp2025.domain.auth.IsUserExistUseCase
-import ru.sicampus.bootcamp2025.domain.auth.RegisterUserUseCase
+import ru.sicampus.bootcamp2025.domain.auth.RegisterUseCase
 import kotlin.reflect.KClass
 
 class RegisterViewModel(
     private val application: Application,
     private val isUserExistUseCase: IsUserExistUseCase,
-    private  val registerUseCase: RegisterUserUseCase
+    private  val registerUseCase: RegisterUseCase
 ) : AndroidViewModel(application = application) {
     private val _state = MutableStateFlow<State>(getStateShow())
     val state = _state.asStateFlow()
 
     private val _navigateToMain = MutableStateFlow(false)
     val navigateToMain = _navigateToMain.asStateFlow()
-
-    private var isNewUser : Boolean? = null
 
     init {
         viewModelScope.launch {
@@ -39,47 +37,57 @@ class RegisterViewModel(
 
     }
     fun register(
-        login : String,
+        email : String,
         password : String,
         name : String
     )
     {
         viewModelScope.launch {
             _state.emit(State.Loading)
-            when (isNewUser) {
-                false -> {
+            when (val isUserExist = checkUserExistence(email)) {
+                true -> {
                     updateState(getApplication<Application>().getString(R.string.error_user_exist))
                 }
-                true -> {
-                    registerUseCase(login, password, name).fold(
-                        onSuccess = {
-                            TODO() // Сделать переход на MainActivity
-                        },
-                        onFailure =  { error ->
-                            updateState(error.toString())
-                        }
-                    )
+                false -> {
+                    registerUser(email, name, password)
                 }
                 null -> {
-                    isUserExistUseCase(login).fold(
-                        onSuccess = { isExist ->
-                            isNewUser = isExist
-                            updateState()
-                        },
-                        onFailure =  { error ->
-                            updateState(error.toString())
-                        }
-                    )
+                    updateState(getApplication<Application>().getString(R.string.error_unknown))
                 }
             }
 
         }
     }
 
+    private suspend fun checkUserExistence(email: String):Boolean?{
+        return try {
+            val result = isUserExistUseCase(email)
+            result.fold(
+                onSuccess = {isExist -> isExist},
+                onFailure = {
+                    Log.e("AuthViewModel", "Error checking user existence", it)
+                    null
+                }
+            )
+        } catch (e: Exception) {
+            Log.e("AuthViewModel", "Error during user existence check", e)
+            null
+        }
+    }
 
+    private suspend fun registerUser(email: String, name: String, password: String) {
+        registerUseCase(email, name, password).fold(
+            onSuccess = {
+                println("Register successful")
+                _navigateToMain.emit(true)
+                },
+            onFailure = { error ->
+                updateState(error.message ?: getApplication<Application>().getString(R.string.error_unknown))
+            }
+        )
+    }
 
     fun changeLogin() {
-        isNewUser = null
         viewModelScope.launch {
             updateState()
         }
@@ -115,7 +123,7 @@ class RegisterViewModel(
                 return RegisterViewModel(
                     application = application,
                     isUserExistUseCase = IsUserExistUseCase(authRepoImpl),
-                    registerUseCase = RegisterUserUseCase(authRepoImpl)
+                    registerUseCase = RegisterUseCase(authRepoImpl)
                 ) as T
             }
 
