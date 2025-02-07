@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -44,7 +43,7 @@ class RegisterViewModel(
     {
         viewModelScope.launch {
             _state.emit(State.Loading)
-            when (val isUserExist = checkUserExistence(email)) {
+            when (checkUserExistence(email)) {
                 true -> {
                     updateState(getApplication<Application>().getString(R.string.error_user_exist))
                 }

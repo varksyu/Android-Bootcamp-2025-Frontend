@@ -1,18 +1,15 @@
 package ru.sicampus.bootcamp2025.ui.entry.auth
 
 import android.app.Application
-import android.content.Context
-import android.provider.Settings.Global.putString
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.statement.bodyAsText
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.sicampus.bootcamp2025.R
@@ -32,8 +29,12 @@ class AuthViewModel(
     private val _state = MutableStateFlow<State>(getStateShow())
     val state = _state.asStateFlow()
 
-    private val _navigateToMain = MutableStateFlow(false)
-    val navigateToMain = _navigateToMain.asStateFlow()
+    private val _navigateToMain = MutableSharedFlow<String?>()
+    val navigateToMain = _navigateToMain.asSharedFlow()
+
+    private val _userRole = MutableSharedFlow<String>()
+    val userRole = _userRole.asSharedFlow()
+
 
     init {
         viewModelScope.launch {
@@ -48,7 +49,7 @@ class AuthViewModel(
     {
         viewModelScope.launch {
             _state.emit(State.Loading)
-            when (val isUserExist = checkUserExistence(email)) {
+            when (checkUserExistence(email)) {
                 true -> {
                     loginUser(email, password)
                 }
@@ -78,9 +79,10 @@ class AuthViewModel(
 
     private suspend fun loginUser(email: String, password: String) {
         loginUseCase(email, password).fold(
-            onSuccess = {
+            onSuccess = { user ->
                 println("Login successful")
-                _navigateToMain.emit(true)
+                _userRole.emit(user.authorities)
+                _navigateToMain.emit(user.authorities)
             },
             onFailure = { error ->
                 updateState(error.message ?: getApplication<Application>().getString(R.string.error_unknown))

@@ -1,7 +1,9 @@
 package ru.sicampus.bootcamp2025.data.user
 
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.sql.Timestamp
 
 @Serializable
 data class UserDto(
@@ -17,14 +19,13 @@ data class UserDto(
     var description: String?,
     @SerialName("avatarUrl")
     var avatarUrl: String?,
-    /*@SerialName("joinedAt")
-    val joinedAt : Timestamp?,
+    @SerialName("joinedAt")
+    val joinedAt: String?,
     @SerialName("createdAt")
-    val createdAt : Timestamp?,*/
-    @SerialName("center")
+    val createdAt: String,
     var center : String?,
-    /*@SerialName("centerDescription")
-    var centerDescription : String?,*/
+    @SerialName("centerDescription")
+    var centerDescription : String?,
     @SerialName("authorities")
     val authorities : String
 )

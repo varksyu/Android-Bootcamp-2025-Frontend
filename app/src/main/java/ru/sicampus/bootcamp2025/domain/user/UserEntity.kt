@@ -9,10 +9,10 @@ data class UserEntity(
     var name: String,
     var description: String?,
     var avatarUrl: String?,
-    /*val joinedAt : Timestamp,
-    val createdAt :  Timestamp,*/
+    val joinedAt : String?,
+    val createdAt :  String,
     var center : String?,
-    //var centerDescription : String,
+    var centerDescription : String?,
     val authorities : String
 
 )

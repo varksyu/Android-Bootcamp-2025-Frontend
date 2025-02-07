@@ -1,18 +1,16 @@
 package ru.sicampus.bootcamp2025.ui.entry.auth
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.view.View
-import androidx.core.content.ContentProviderCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.launch
 import ru.sicampus.bootcamp2025.MainActivity
 import ru.sicampus.bootcamp2025.R
 import ru.sicampus.bootcamp2025.databinding.FragmentAuthBinding
@@ -31,6 +29,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
         viewBinding.goToRegisterButton.setOnClickListener {
             findNavController().navigate(R.id.action_auth_to_register)
         }
+
 
         viewBinding.signInButton.setOnClickListener {
             val email = viewBinding.userLogin.text.toString()
@@ -53,21 +52,24 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
             if (state is AuthViewModel.State.Show) {
                 viewBinding.errorText.text = state.errorText.toString()
                 viewBinding.errorText.visibility =
-                    if (state.errorText == null)  View.GONE else View.VISIBLE
-            }
-
-            viewModel.navigateToMain.collectWithLifecycle(this) { shouldNavigate ->
-                if (shouldNavigate) {
-                    val intent = Intent(requireContext(), MainActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                }
+                    if (state.errorText == null) View.GONE else View.VISIBLE
             }
         }
+
+        viewModel.navigateToMain.collectWithLifecycle(viewLifecycleOwner) { userRole ->
+            val intent = Intent(requireContext(), MainActivity::class.java).apply {
+                putExtra("USER_ROLE", userRole)
+            }
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
         viewBinding.userLogin.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
-            override fun afterTextChanged(p0: Editable?) {}
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
 
         })
     }
@@ -76,9 +78,6 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
     }
     private fun isValidPassword(password : String) : Boolean {
         return password.length >= 8
-    }
-    private fun isValidName(name: String): Boolean {
-        return name.all { it.isLetter() || it.isWhitespace() }
     }
 
     override fun onDestroyView() {

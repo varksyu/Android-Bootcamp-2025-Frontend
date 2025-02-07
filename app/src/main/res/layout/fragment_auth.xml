@@ -61,6 +61,7 @@
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical"
                 android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 android:maxLength="15"
                 android:maxLines="1"
                 android:textColorHint="@color/grey"
@@ -88,11 +89,12 @@
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical"
                 android:hint="@string/password"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:maxLength="15"
                 android:maxLines="1"
                 android:textColorHint="@color/grey"
-                android:textSize="12sp">
+                android:textSize="12sp"
+                tools:visibility="visible">
 
             </EditText>
 
