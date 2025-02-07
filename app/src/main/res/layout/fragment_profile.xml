@@ -6,6 +6,8 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/logout"
+        android:elevation="20dp"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginTop="32dp"
@@ -107,9 +109,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="56dp"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/cardView2"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Никита">

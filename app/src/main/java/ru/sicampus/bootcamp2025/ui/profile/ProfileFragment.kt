@@ -21,8 +21,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _viewBinding = FragmentProfileBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
+        
 
         viewBinding.refresh.setOnClickListener{ viewModel.clickRefresh() }
+
+        viewBinding.logout.setOnClickListener{
+            TODO("нужно короче logout сделать")
+        }
+
+
 
         viewBinding.editButton.setOnClickListener {
             viewBinding.edit.visibility = View.GONE
