@@ -8,8 +8,6 @@ import androidx.fragment.app.viewModels
 import com.squareup.picasso.Picasso
 import ru.sicampus.bootcamp2025.R
 import ru.sicampus.bootcamp2025.databinding.FragmentProfileBinding
-import ru.sicampus.bootcamp2025.ui.centerList.CenterListViewModel
-import ru.sicampus.bootcamp2025.ui.profile.ProfileViewModel.Companion.Factory
 import ru.sicampus.bootcamp2025.utils.collectWithLifecycle
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -23,16 +21,21 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _viewBinding = FragmentProfileBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
+        
 
-        viewBinding.refresh.setOnClickListener{ viewModel.clickRefresh()}
+        viewBinding.refresh.setOnClickListener{ viewModel.clickRefresh() }
+
         viewBinding.logout.setOnClickListener{
             TODO("нужно короче logout сделать")
         }
+
+
+
         viewBinding.editButton.setOnClickListener {
             viewBinding.edit.visibility = View.GONE
             viewBinding.save.visibility = View.VISIBLE
-            viewBinding.email.setFocusable(true)
-            viewBinding.email.setClickable(true)
+            viewBinding.email.isFocusable = true
+            viewBinding.email.isClickable = true
             viewBinding.birthdayData.isClickable = true
             viewBinding.birthdayData.isFocusable = true
             viewBinding.aboutMe.isClickable = true
@@ -62,10 +65,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             when(state) {
                 is ProfileViewModel.State.Loading -> Unit
                 is ProfileViewModel.State.Show -> {
-                    Log.d("itemsInFragment", "${state.items.toString()}")
+                    Log.d("itemsInFragment", state.items.toString())
                     viewBinding.name.text = state.items.name
                     viewBinding.centerTitle.text = state.items.center
-                    //viewBinding.centerDescription.text = state.items.centerDescription
+                    viewBinding.centerDescription.text = state.items.centerDescription
                     viewBinding.email.setText(state.items.email)
                     viewBinding.birthdayData.setText(state.items.birthDate)
                     viewBinding.aboutMe.setText(state.items.description)

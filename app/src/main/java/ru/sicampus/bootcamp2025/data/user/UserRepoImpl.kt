@@ -1,6 +1,5 @@
 package ru.sicampus.bootcamp2025.data.user
 
-import ru.sicampus.bootcamp2025.domain.center.CenterRepo
 import ru.sicampus.bootcamp2025.domain.user.UserEntity
 import ru.sicampus.bootcamp2025.domain.user.UserRepo
 
@@ -17,8 +16,10 @@ class UserRepoImpl (
                 description = dto.description ?: "",
                 avatarUrl = dto.avatarUrl ?: "",
                 center = dto.center ?: "",
-                authorities = dto.authorities
-                //centerDescription = dto.centerDescription ?: "",
+                authorities = dto.authorities,
+                centerDescription = dto.centerDescription ?: "",
+                createdAt = dto.createdAt,
+                joinedAt = dto.joinedAt
                 )
 
             }

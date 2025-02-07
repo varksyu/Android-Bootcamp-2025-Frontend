@@ -55,8 +55,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         viewModel.state.collectWithLifecycle(this) { state ->
             if (state is RegisterViewModel.State.Show) {
                 viewBinding.errorText.text = state.errorText.toString()
-                viewBinding.errorText.visibility =
-                    if (state.errorText == null)  View.GONE else View.VISIBLE
+                viewBinding.errorText.visibility = View.GONE
             }
 
         }
@@ -71,9 +70,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         viewBinding.email.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
-            override fun afterTextChanged(p0: Editable?) {
-                viewModel.changeLogin()
-            }
+            override fun afterTextChanged(p0: Editable?) { viewModel.changeLogin() }
 
         })
     }
@@ -84,7 +81,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         return password.length >= 8
     }
     private fun isValidName(name: String): Boolean {
-        return name.all { it.isLetter() || it.isWhitespace() }
+        return (name.all { it.isLetter() || it.isWhitespace() }) and (name.isNotEmpty())
     }
 
 
