@@ -6,7 +6,7 @@ import ru.sicampus.bootcamp2025.domain.center.CenterRepo
 class CenterRepoImpl(
     private val centerNetworkDataSource: CenterNetworkDataSource
 ) : CenterRepo {
-    override suspend fun getCenters(): Result<List<CenterEntity>> {
+    override suspend fun getCenters(lat : Double?, lng : Double?): Result<List<CenterEntity>> {
 
         return centerNetworkDataSource.getCenters().map { listDto ->
             listDto.mapNotNull { dto ->

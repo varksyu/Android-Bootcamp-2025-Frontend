@@ -26,7 +26,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         viewBinding.refresh.setOnClickListener{ viewModel.clickRefresh() }
 
         viewBinding.logout.setOnClickListener{
-            TODO("нужно короче logout сделать")
+
         }
 
 
@@ -52,7 +52,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             viewBinding.birthdayData.isFocusable = false
             viewBinding.aboutMe.isClickable = false
             viewBinding.aboutMe.isFocusable = false
-            //update_state_post()
         }
 
 

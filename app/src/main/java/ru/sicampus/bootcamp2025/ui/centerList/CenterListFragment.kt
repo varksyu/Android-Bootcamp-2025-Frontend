@@ -1,7 +1,10 @@
 package ru.sicampus.bootcamp2025.ui.centerList
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -41,10 +44,8 @@ class CenterListFragment : Fragment(R.layout.fragment_center_list) {
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            // Разрешение уже предоставлено, запрашиваем местоположение
             getLocation()
         } else {
-            // Запрашиваем разрешение
             locationPermissionRequest.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
 
@@ -64,17 +65,29 @@ class CenterListFragment : Fragment(R.layout.fragment_center_list) {
             when(state) {
                 is CenterListViewModel.State.Loading -> Unit
                 is CenterListViewModel.State.Show -> {
-                    Log.d("itemsInFragment", "${state.items.toString()}")
+                    Log.d("itemsInFragment", state.items.toString())
                     adapter.submitList(state.items)
                 }
                 is CenterListViewModel.State.Error -> {
                     viewBinding.errorText.text = state.text
                 }
             }
-
         }
+    }
+    private fun getLocation() {
+        val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val provider = LocationManager.GPS_PROVIDER
 
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            val location: Location? = locationManager.getLastKnownLocation(provider)
+            location?.let {
+                val latitude = it.latitude
+                val longitude = it.longitude
+                Log.d("Location", "Latitude: $latitude, Longitude: $longitude")
 
+                viewModel.updateLocation(latitude, longitude)
+            } ?: Log.d("Location", "Не удалось получить локацию")
+        }
     }
 
     override fun onDestroyView() {
