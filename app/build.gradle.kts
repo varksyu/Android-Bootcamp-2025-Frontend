@@ -41,7 +41,10 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.play.services.maps)
+    implementation(libs.parse.android) {
+        exclude(group = "com.android.support", module = "support-compat")
+    }
     implementation(libs.okhttp)
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
@@ -62,5 +65,4 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation (libs.picasso)
     implementation(libs.play.services.location)
-
 }

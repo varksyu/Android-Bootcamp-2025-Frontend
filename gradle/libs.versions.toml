@@ -14,7 +14,9 @@ fragment = "1.8.5"
 ktor = "2.3.4"
 navigation = "2.8.6"
 okhttp = "4.9.3"
+parseAndroid = "1.17.2"
 play-services-location = "21.0.1"
+playServicesMaps = "19.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,10 +36,11 @@ ktor-client-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-
 androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 androidx-navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+parse-android = { module = "com.parse:parse-android", version.ref = "parseAndroid" }
 picasso = { group = "com.squareup.picasso", name = "picasso", version = "2.8" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "play-services-location" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 [plugins]
-navigation-safe-args = "androidx.navigation.safeargs.kotlin:2.5.3"
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 

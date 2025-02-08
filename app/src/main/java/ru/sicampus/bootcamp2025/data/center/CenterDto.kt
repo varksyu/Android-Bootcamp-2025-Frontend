@@ -2,9 +2,10 @@ package ru.sicampus.bootcamp2025.data.center
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ru.sicampus.bootcamp2025.data.user.UserDto
 
 @Serializable
-data class CenterDto (
+data class CenterDto(
     @SerialName("id")
     val id : Long?,
     @SerialName("name")
@@ -17,6 +18,6 @@ data class CenterDto (
     val lat : Double?,
     @SerialName("lng")
     val lng : Double?,
-    //@SerialName("users")
-    //val users : List<UserDto>?
+    @SerialName("users")
+    val users : List<UserDto>?
 )

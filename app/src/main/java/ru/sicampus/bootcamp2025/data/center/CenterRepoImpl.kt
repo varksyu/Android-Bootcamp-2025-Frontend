@@ -2,6 +2,8 @@ package ru.sicampus.bootcamp2025.data.center
 
 import ru.sicampus.bootcamp2025.domain.center.CenterEntity
 import ru.sicampus.bootcamp2025.domain.center.CenterRepo
+import ru.sicampus.bootcamp2025.data.user.UserDto
+import ru.sicampus.bootcamp2025.domain.user.UserEntity
 
 class CenterRepoImpl(
     private val centerNetworkDataSource: CenterNetworkDataSource
@@ -20,10 +22,13 @@ class CenterRepoImpl(
                     description = description,
                     distance = dto.distance ?: -1.0,
                     lat = dto.lat ?: 0.0,
-                    lng = dto.lng ?: 0.0
+                    lng = dto.lng ?: 0.0,
+                    users = dto.users?.map { userDto ->
+                        userDto.toEntity()
+                    } ?: emptyList()
                 )
-
             }
         }
     }
+
 }

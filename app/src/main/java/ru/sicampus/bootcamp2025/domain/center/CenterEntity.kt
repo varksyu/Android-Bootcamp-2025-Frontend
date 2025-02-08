@@ -1,14 +1,13 @@
 package ru.sicampus.bootcamp2025.domain.center
 
-import kotlinx.serialization.Serializable
+import ru.sicampus.bootcamp2025.domain.user.UserEntity
 
-@Serializable
 data class CenterEntity(
-    val id : Long,
+    val id: Long,
     val name: String,
     val description: String,
-    val distance : Double?,
-    val lat : Double?,
-    val lng : Double?,
-    //val users : List<UserEntity>
+    val distance: Double?,
+    val lat: Double?,
+    val lng: Double?,
+    val users: List<UserEntity>
 )

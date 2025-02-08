@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="600dp"
+    android:layout_gravity="bottom"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -46,6 +47,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -56,16 +58,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/close"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:clickable="true"
             android:src="@drawable/ic_close"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:clickable="true" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/view"
@@ -129,12 +141,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:ellipsize="end"
-                android:maxLines="8"
+                android:maxLines="4"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                tools:text="djkskdchsicgdkchcffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffflihcishcdcdskcsdkdcckukssdkcbsdckhbdbcjbck"
-                >
-            </TextView>
+                tools:text="djkskdchsicgdkchcffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffflihcishcdcdskcsdkdcckukssdkcbsdckhbdbcjbck"></TextView>
 
 
         </LinearLayout>
@@ -143,7 +153,7 @@
             android:id="@+id/join_the_center"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="236dp"
+            android:layout_marginTop="168dp"
             android:backgroundTint="@color/orange"
             android:text="@string/join_the_center"
             android:textSize="14sp"
@@ -157,13 +167,35 @@
             android:id="@+id/error_join_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:textColor="#FF0000"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/join_the_center"
             app:layout_constraintStart_toStartOf="@+id/join_the_center"
             app:layout_constraintTop_toBottomOf="@+id/join_the_center"
-            tools:text="Ошибка"
-            android:layout_marginTop="10dp"
-            android:visibility="gone"/>
+            tools:text="Ошибка" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/active_volunteers_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2"
+            tools:listitem="@layout/one_volunteer_list_view" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="380dp"
+            android:background="@color/orange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView7"
@@ -178,29 +210,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.968" />
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="516dp"
-            android:background="@color/orange"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/active_volunteers_list"
-            android:visibility="visible"
-            tools:listitem="@layout/one_volunteer_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view2" />
-
+            app:layout_constraintVertical_bias="0.977" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

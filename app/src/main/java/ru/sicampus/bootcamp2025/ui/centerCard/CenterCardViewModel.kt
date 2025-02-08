@@ -3,6 +3,7 @@ package ru.sicampus.bootcamp2025.ui.centerCard
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -14,8 +15,17 @@ class CenterCardViewModel : ViewModel(){
     private val _state = MutableStateFlow<State>(State.Loading)
     val state = _state.asStateFlow()
 
-    init {
+    private var name : String? = null
+
+    fun saveName(savedName : String) {
+        name = savedName
         updateState()
+        Log.d("nameCenter", "$name")
+    }
+
+    init {
+        /*if (id == null) _state.value = State.Error("ID центра не найден")
+        else updateState()*/
     }
 
     fun clickRefresh() {
@@ -27,6 +37,8 @@ class CenterCardViewModel : ViewModel(){
     fun updateState() {
         viewModelScope.launch {
             _state.emit(State.Loading)
+            delay(5_000)
+            _state.emit(State.Show(CenterEntity(1, name!!, "dfndfdfnksnkjdsnkjnfksdnfkj", null, null, null, emptyList())))
             /*_state.emit(
                 getCenterUseCase.getCenter().fold(
                     onSuccess = { data ->

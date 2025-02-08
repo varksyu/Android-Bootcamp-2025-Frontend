@@ -48,7 +48,7 @@ class UserRepoImpl (
     }
     fun UserDto.toEntity(): UserEntity {
         return UserEntity(
-            id = this.id ?: 0L, // Подставляем 0L, если id отсутствует
+            id = this.id ?: 0L,
             email = this.email,
             birthDate = this.birthDate,
             name = this.name,

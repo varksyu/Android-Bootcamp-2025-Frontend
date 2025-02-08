@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/fragment_center_list"
+        android:id="@+id/fragment_map"
         android:enabled="true"
         android:icon="@drawable/ic_centers"
         android:title="@string/centers" />
