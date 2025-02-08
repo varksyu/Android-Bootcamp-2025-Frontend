@@ -25,10 +25,6 @@ object AuthStorageDataSource {
 
     }
 
-    fun updateUserDto(newUserDto : UserDto) {
-        userDto = newUserDto
-    }
-
     fun clear() {
         token = null
     }
