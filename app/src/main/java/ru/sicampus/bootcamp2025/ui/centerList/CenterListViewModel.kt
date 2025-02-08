@@ -26,19 +26,11 @@ class CenterListViewModel(
         updateState()
     }
 
-    private var latitude: Double? = null
-    private var longitude: Double? = null
-    fun setLocation(latitude: Double, longitude: Double) {
-        this.latitude = latitude
-        this.longitude = longitude
-        updateState()
-    }
-
-    private fun updateState() {
+    private fun updateState(lat : Double? = null, lng : Double? = null) {
         viewModelScope.launch {
             _state.emit(State.Loading)
             _state.emit(
-                getCentersUseCase.invoke(/*latitude, longitude*/).fold(
+                getCentersUseCase.invoke(lat, lng).fold(
                     onSuccess = { data ->
                         Log.d("uraa", "успех успех ${data.toString()}")
                         State.Show(data)
@@ -52,6 +44,10 @@ class CenterListViewModel(
             //_state.emit(State.Error("о нет ошибка ошибка помогите"))
         }
     }
+    fun updateLocation(latitude: Double, longitude: Double) {
+        updateState(latitude, longitude)
+    }
+
     sealed interface State {
         data object Loading: State
         data class Show(

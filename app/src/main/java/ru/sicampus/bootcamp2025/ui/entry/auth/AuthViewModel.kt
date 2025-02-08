@@ -77,6 +77,7 @@ class AuthViewModel(
         }
     }
 
+
     private suspend fun loginUser(email: String, password: String) {
         loginUseCase(email, password).fold(
             onSuccess = { user ->

@@ -26,7 +26,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         viewBinding.refresh.setOnClickListener{ viewModel.clickRefresh() }
         saveMode()
         viewBinding.logout.setOnClickListener{
-            TODO("нужно короче logout сделать")
+
         }
 
 

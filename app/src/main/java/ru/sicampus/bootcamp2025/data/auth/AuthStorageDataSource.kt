@@ -8,8 +8,8 @@ object AuthStorageDataSource {
     var token: String? = null
         private set
 
-    var userInfo : UserDto? = null
 
+    var userInfo : UserDto? = null
     fun updateToken(email : String, password : String) : String {
         val updateToken = Credentials.basic(email, password)
         token = updateToken
@@ -23,6 +23,10 @@ object AuthStorageDataSource {
             error("Server Error id = null")
         }
 
+    }
+
+    fun updateUserDto(newUserDto : UserDto) {
+        userDto = newUserDto
     }
 
     fun clear() {
