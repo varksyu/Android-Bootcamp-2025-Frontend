@@ -389,7 +389,6 @@
                 android:background="@android:color/transparent"
                 android:clickable="false"
                 android:focusable="false"
-                android:inputType="datetime"
                 android:maxLength="10">
 
             </EditText>

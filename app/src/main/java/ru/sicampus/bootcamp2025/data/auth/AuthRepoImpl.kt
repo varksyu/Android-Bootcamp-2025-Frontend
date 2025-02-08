@@ -17,12 +17,12 @@ class AuthRepoImpl(
 
     override suspend fun login(email: String, password: String): Result<UserDto> {
         val token = authStorageDataSource.updateToken(email, password)
-        val userDto = authNetworkDataSource.login(token).onFailure {
+
+        val userInfo = authNetworkDataSource.login(token).onFailure {
             authStorageDataSource.clear()
         }
-        authStorageDataSource.updateUserDto(userDto.getOrThrow())
-        return userDto
-
+        authStorageDataSource.updateUserInfo(userInfo)
+        return userInfo
     }
 
 }

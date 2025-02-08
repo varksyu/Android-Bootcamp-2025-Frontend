@@ -26,7 +26,6 @@ class CenterListViewModel(
         updateState()
     }
 
-
     private fun updateState(lat : Double? = null, lng : Double? = null) {
         viewModelScope.launch {
             _state.emit(State.Loading)

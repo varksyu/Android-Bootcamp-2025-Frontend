@@ -75,7 +75,7 @@ class RegisterViewModel(
     }
 
     private suspend fun registerUser(email: String, name: String, password: String) {
-        registerUseCase(email, name, password).fold(
+        registerUseCase(email, password, name).fold(
             onSuccess = {
                 println("Register successful")
                 _navigateToMain.emit(true)

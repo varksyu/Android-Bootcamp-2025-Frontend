@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.sicampus.bootcamp2025.data.auth.AuthStorageDataSource
 import ru.sicampus.bootcamp2025.data.center.CenterNetworkDataSource
 import ru.sicampus.bootcamp2025.data.center.CenterRepoImpl
 import ru.sicampus.bootcamp2025.data.user.UserNetworkDataSource
@@ -29,9 +30,7 @@ class ProfileViewModel(
     fun clickRefresh() {
         updateStateGet()
     }
-    fun editMode() {
 
-    }
     fun updateStateGet() {
         viewModelScope.launch {
             _state.emit(State.Loading)
@@ -50,6 +49,45 @@ class ProfileViewModel(
             //_state.emit(State.Error("о нет ошибка ошибка помогите"))
         }
     }
+
+
+
+    fun updateStateSave(name: String, email: String, birthDate: String, description: String) {
+        viewModelScope.launch {
+            _state.emit(State.Loading)
+            val userSave = getUserUseCase.getUserFromStorage()
+            val updatedUser = userSave?.let {
+                userSave.id?.let { it1 ->
+                    UserEntity(
+                        id = it1,
+                        name = name,
+                        email = email,
+                        birthDate = birthDate,
+                        description = description,
+                        avatarUrl = userSave.avatarUrl,
+                        joinedAt = userSave.joinedAt,
+                        createdAt = it.createdAt,
+                        center = userSave.center,
+                        centerDescription = userSave.centerDescription,
+                        authorities = userSave.authorities,
+                    )
+                }
+            }
+            _state.emit(
+                getUserUseCase.updateUser(updatedUser!!).fold(
+                    onSuccess = {
+                        State.Show(updatedUser)
+                    },
+                    onFailure = { error ->
+                        State.Error("где-то что-то падает")
+                    }
+            )
+            )
+            //_state.emit(State.Error("о нет ошибка ошибка помогите"))
+        }
+    }
+
+
     sealed interface State {
         data object Loading: State
         data class Show(
@@ -67,7 +105,8 @@ class ProfileViewModel(
                     getUserUseCase = GetUserUseCase(
                         repo = UserRepoImpl(
                             userNetworkDataSource = UserNetworkDataSource()
-                        )
+                        ),
+                        authStorageDataSource = AuthStorageDataSource
                     )
                 ) as T
             }

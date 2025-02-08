@@ -38,10 +38,10 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
                 viewBinding.errorText.text = getString(R.string.error_email_no_valid)
                 viewBinding.errorText.visibility = View.VISIBLE
             }
-            else if (!isValidPassword(password)) {
+            /*else if (!isValidPassword(password)) {
                 viewBinding.errorText.text = getString(R.string.error_password_no_valid)
                 viewBinding.errorText.visibility = View.VISIBLE
-            }
+            }*/
             else {
                 viewModel.auth(email, password)
                 viewBinding.errorText.visibility = View.GONE

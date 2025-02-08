@@ -2,52 +2,48 @@ package ru.sicampus.bootcamp2025.ui.userList
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ru.sicampus.bootcamp2025.data.center.CenterNetworkDataSource
-import ru.sicampus.bootcamp2025.data.center.CenterRepoImpl
-import ru.sicampus.bootcamp2025.data.user.UserNetworkDataSource
-import ru.sicampus.bootcamp2025.data.user.UserRepoImpl
-import ru.sicampus.bootcamp2025.domain.center.GetCentersUseCase
 import ru.sicampus.bootcamp2025.domain.user.GetUserUseCase
 import ru.sicampus.bootcamp2025.domain.user.UserEntity
-import ru.sicampus.bootcamp2025.ui.centerList.CenterListViewModel
+import ru.sicampus.bootcamp2025.ui.centerList.CenterListViewModel.State
 
-class FragmentFreeVolounteersViewModel(
-    private val getUserUseCase: GetUserUseCase
+class FreeVolunteersListViewModel(
+    //private val getUserListUseCase: GetUserUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow<State>(State.Loading)
     val state = _state.asStateFlow()
 
     init {
-        updateStateGet()
+        updateState()
     }
 
     fun clickRefresh() {
-        updateStateGet()
+        updateState()
     }
-    fun editMode() {
-
-    }
-    fun updateStateGet() {
+    private fun updateState() {
         viewModelScope.launch {
             _state.emit(State.Loading)
-            //_state.emit(State.Error("о нет ошибка ошибка помогите"))
+            delay(2_000)
+            _state.emit(State.Error("Функционал скоро будет добавлен")
+            )
         }
     }
+
+
     sealed interface State {
         data object Loading: State
         data class Show(
-            val items: UserEntity
+            val items: List<UserEntity>
         ) : State
         data class Error(
             val text: String
         ) : State
     }
-    companion object {
+    /*companion object {
         val Factory : ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -55,11 +51,12 @@ class FragmentFreeVolounteersViewModel(
                     getUserUseCase = GetUserUseCase(
                         repo = UserRepoImpl(
                             userNetworkDataSource = UserNetworkDataSource()
-                        )
+                        ),
+                        AuthStorageDataSource
                     )
                 ) as T
             }
         }
     }
-
+*/
 }

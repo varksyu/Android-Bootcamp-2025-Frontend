@@ -8,12 +8,21 @@ object AuthStorageDataSource {
     var token: String? = null
         private set
 
-    lateinit var userDto : UserDto
 
+    var userInfo : UserDto? = null
     fun updateToken(email : String, password : String) : String {
         val updateToken = Credentials.basic(email, password)
         token = updateToken
         return updateToken
+    }
+    fun updateUserInfo(userDto: Result<UserDto>) {
+        userDto.onSuccess { user ->
+            userInfo = user
+        }.onFailure { error ->
+            userInfo = null
+            error("Server Error id = null")
+        }
+
     }
 
     fun updateUserDto(newUserDto : UserDto) {
