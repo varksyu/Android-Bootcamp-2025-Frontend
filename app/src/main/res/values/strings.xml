@@ -27,6 +27,9 @@
     <string name="error_name_no_valid">Имя может содержать только буквы и пробелы</string>
     <string name="error_email_no_valid">Некорректный email</string>
     <string name="error_password_no_valid">Пароль должен содержать как минимум 8 символов</string>
+    <string name="description">Описание</string>
+    <string name="join_the_center">Присоединиться</string>
+    <string name="active_center_volunteers">Активные волонтёры центра</string>
 
 
 </resources>

@@ -21,20 +21,15 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        // Изменяем меню в зависимости от роли
-        if (userRole == "ROLE_USER") {
-            bottomNavigationView.menu.clear()  // Очищаем меню
-            bottomNavigationView.inflateMenu(R.menu.bottom_menu)  // Загружаем меню для пользователя
-
-            // Устанавливаем граф для пользователя
-            navController.setGraph(R.navigation.main_nav_graph)
+        if (userRole == "ROLE_ADMIN") {
+            bottomNavigationView.menu.clear()
+            bottomNavigationView.inflateMenu(R.menu.bottom_menu_admin)
+            navController.setGraph(R.navigation.main_admin_nav_graph)
 
         } else {
-            bottomNavigationView.menu.clear()  // Очищаем меню
-            bottomNavigationView.inflateMenu(R.menu.bottom_menu_admin)  // Загружаем меню для администратора
-
-            // Устанавливаем граф для администратора
-            navController.setGraph(R.navigation.main_admin_nav_graph)
+            bottomNavigationView.menu.clear()
+            bottomNavigationView.inflateMenu(R.menu.bottom_menu)
+            navController.setGraph(R.navigation.main_nav_graph)
         }
 
 

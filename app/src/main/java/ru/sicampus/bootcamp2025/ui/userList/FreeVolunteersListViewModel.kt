@@ -3,6 +3,7 @@ package ru.sicampus.bootcamp2025.ui.userList
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -11,7 +12,7 @@ import ru.sicampus.bootcamp2025.domain.user.UserEntity
 import ru.sicampus.bootcamp2025.ui.centerList.CenterListViewModel.State
 
 class FreeVolunteersListViewModel(
-    private val getUserListUseCase: GetUserUseCase
+    //private val getUserListUseCase: GetUserUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow<State>(State.Loading)
     val state = _state.asStateFlow()
@@ -25,17 +26,10 @@ class FreeVolunteersListViewModel(
     }
     private fun updateState() {
         viewModelScope.launch {
-            /*_state.emit(State.Loading)
-            _state.emit(
-                getUserListUseCase.getUserList().fold(
-                    onSuccess = { data ->
-                        State.Show(data)
-                    },
-                    onFailure = { error ->
-                        State.Error(error.message.toString())
-                    }
-                )
-            )*/
+            _state.emit(State.Loading)
+            delay(2_000)
+            _state.emit(State.Error("Функционал скоро будет добавлен")
+            )
         }
     }
 

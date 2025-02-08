@@ -24,4 +24,20 @@ class UserRepoImpl (
 
             }
         }
+    override suspend fun updateUser(userEntity: UserEntity): Result<Unit> {
+        return userNetworkDataSource.updateUser(userEntity.id, UserDto(
+            userEntity.id,
+            email = userEntity.email,
+            birthDate = userEntity.birthDate,
+            name = userEntity.name,
+            description = userEntity.description,
+            avatarUrl = userEntity.avatarUrl,
+            joinedAt = userEntity.joinedAt,
+            createdAt = userEntity.createdAt,
+            center = userEntity.center,
+            centerDescription = userEntity.centerDescription,
+            authorities = userEntity.authorities,
+        )
+        ).map { }
+    }
 }

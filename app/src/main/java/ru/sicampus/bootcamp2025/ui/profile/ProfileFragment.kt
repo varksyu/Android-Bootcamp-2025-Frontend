@@ -24,7 +24,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         
 
         viewBinding.refresh.setOnClickListener{ viewModel.clickRefresh() }
-
+        saveMode()
         viewBinding.logout.setOnClickListener{
             TODO("нужно короче logout сделать")
         }
@@ -32,27 +32,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 
         viewBinding.editButton.setOnClickListener {
-            viewBinding.edit.visibility = View.GONE
-            viewBinding.save.visibility = View.VISIBLE
-            viewBinding.email.isFocusable = true
-            viewBinding.email.isClickable = true
-            viewBinding.birthdayData.isClickable = true
-            viewBinding.birthdayData.isFocusable = true
-            viewBinding.aboutMe.isClickable = true
-            viewBinding.aboutMe.isFocusable = true
+            editMode()
             viewModel.updateStateGet()
         }
 
         viewBinding.saveButton.setOnClickListener {
-            viewBinding.edit.visibility = View.VISIBLE
-            viewBinding.save.visibility = View.GONE
-            viewBinding.email.isClickable = false
-            viewBinding.email.isFocusable = false
-            viewBinding.birthdayData.isClickable = false
-            viewBinding.birthdayData.isFocusable = false
-            viewBinding.aboutMe.isClickable = false
-            viewBinding.aboutMe.isFocusable = false
-            //update_state_post()
+            saveMode()
+            viewModel.updateStateSave(
+                viewBinding.name.text.toString(),
+                viewBinding.email.text.toString(),
+                viewBinding.birthdayData.text.toString(),
+                viewBinding.aboutMe.text.toString(),
+            )
+            viewModel.updateStateGet()
         }
 
 
@@ -72,7 +64,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     viewBinding.email.setText(state.items.email)
                     viewBinding.birthdayData.setText(state.items.birthDate)
                     viewBinding.aboutMe.setText(state.items.description)
-                    Picasso.get().load(state.items.avatarUrl).resize(100, 100).centerCrop().into(viewBinding.avatar)
+                    //if (state.items.avatarUrl != null) Picasso.get().load(state.items.avatarUrl).resize(100, 100).centerCrop().into(viewBinding.avatar)
                 }
                 is ProfileViewModel.State.Error -> {
                     viewBinding.errorText.text = state.text
@@ -82,6 +74,29 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
 
+
+
+    }
+
+    private fun saveMode() {
+        viewBinding.edit.visibility = View.VISIBLE
+        viewBinding.save.visibility = View.GONE
+        viewBinding.email.isFocusableInTouchMode = false
+        viewBinding.email.isFocusable = false
+        viewBinding.birthdayData.isFocusableInTouchMode = false
+        viewBinding.birthdayData.isFocusable = false
+        viewBinding.aboutMe.isFocusableInTouchMode = false
+        viewBinding.aboutMe.isFocusable = false
+    }
+    private fun editMode() {
+        viewBinding.edit.visibility = View.GONE
+        viewBinding.save.visibility = View.VISIBLE
+        viewBinding.email.isFocusable = true
+        viewBinding.email.isFocusableInTouchMode = true
+        viewBinding.birthdayData.isFocusableInTouchMode = true
+        viewBinding.birthdayData.isFocusable = true
+        viewBinding.aboutMe.isFocusableInTouchMode = true
+        viewBinding.aboutMe.isFocusable = true
     }
 
     override fun onDestroyView() {

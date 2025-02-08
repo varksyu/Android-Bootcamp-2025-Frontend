@@ -30,9 +30,7 @@ class ProfileViewModel(
     fun clickRefresh() {
         updateStateGet()
     }
-    fun editMode() {
 
-    }
     fun updateStateGet() {
         viewModelScope.launch {
             _state.emit(State.Loading)
@@ -51,6 +49,45 @@ class ProfileViewModel(
             //_state.emit(State.Error("о нет ошибка ошибка помогите"))
         }
     }
+
+
+
+    fun updateStateSave(name: String, email: String, birthDate: String, description: String) {
+        viewModelScope.launch {
+            _state.emit(State.Loading)
+            val userSave = getUserUseCase.getUserFromStorage()
+            val updatedUser = userSave?.let {
+                userSave.id?.let { it1 ->
+                    UserEntity(
+                        id = it1,
+                        name = name,
+                        email = email,
+                        birthDate = birthDate,
+                        description = description,
+                        avatarUrl = userSave.avatarUrl,
+                        joinedAt = userSave.joinedAt,
+                        createdAt = it.createdAt,
+                        center = userSave.center,
+                        centerDescription = userSave.centerDescription,
+                        authorities = userSave.authorities,
+                    )
+                }
+            }
+            _state.emit(
+                getUserUseCase.updateUser(updatedUser!!).fold(
+                    onSuccess = {
+                        State.Show(updatedUser)
+                    },
+                    onFailure = { error ->
+                        State.Error("где-то что-то падает")
+                    }
+            )
+            )
+            //_state.emit(State.Error("о нет ошибка ошибка помогите"))
+        }
+    }
+
+
     sealed interface State {
         data object Loading: State
         data class Show(
