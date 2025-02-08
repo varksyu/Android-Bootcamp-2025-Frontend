@@ -44,4 +44,18 @@ class UserNetworkDataSource {
             }
         }
     }
+
+    suspend fun getUserList() : Result<List<UserDto>> = withContext(Dispatchers.IO){
+        runCatching {
+            val result = client.get("http://10.0.2.2:8081/api/user/free") {
+                header(HttpHeaders.Authorization, token)
+            }
+            Log.d("serverCode", "${result.status}")
+            if (result.status != HttpStatusCode.OK) {
+                error("Status ${result.status}")
+            }
+            result.body()
+        }
+
+    }
 }

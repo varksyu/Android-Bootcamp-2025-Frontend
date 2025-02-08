@@ -38,6 +38,27 @@ class UserRepoImpl (
             centerDescription = userEntity.centerDescription,
             authorities = userEntity.authorities,
         )
-        ).map { }
+        ).map {}
+    }
+
+    override suspend fun getUserList(): Result<List<UserEntity>> {
+        return userNetworkDataSource.getUserList().map { userList ->
+            userList.map { it.toEntity() }
+        }
+    }
+    fun UserDto.toEntity(): UserEntity {
+        return UserEntity(
+            id = this.id ?: 0L, // Подставляем 0L, если id отсутствует
+            email = this.email,
+            birthDate = this.birthDate,
+            name = this.name,
+            description = this.description,
+            avatarUrl = this.avatarUrl,
+            joinedAt = this.joinedAt,
+            createdAt = this.createdAt,
+            center = this.center,
+            centerDescription = this.centerDescription,
+            authorities = this.authorities
+        )
     }
 }

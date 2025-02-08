@@ -27,5 +27,6 @@ object AuthStorageDataSource {
 
     fun clear() {
         token = null
+        userInfo = null
     }
 }

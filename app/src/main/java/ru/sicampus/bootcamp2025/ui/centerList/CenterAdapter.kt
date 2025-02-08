@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.sicampus.bootcamp2025.databinding.OneCenterListViewBinding
 import ru.sicampus.bootcamp2025.domain.center.CenterEntity
 
-class CenterAdapter : ListAdapter<CenterEntity, CenterAdapter.ViewHolder>(CenterDiff) {
+class CenterAdapter(
+    //private val onCenterClick: (CenterEntity) -> Unit
+) : ListAdapter<CenterEntity, CenterAdapter.ViewHolder>(CenterDiff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -16,7 +18,7 @@ class CenterAdapter : ListAdapter<CenterEntity, CenterAdapter.ViewHolder>(Center
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            )//, onCenterClick
         )
     }
 
@@ -27,11 +29,14 @@ class CenterAdapter : ListAdapter<CenterEntity, CenterAdapter.ViewHolder>(Center
 
     class ViewHolder(
         private val binding: OneCenterListViewBinding
+        //private val onCenterClick: (CenterEntity) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
             fun bind(item : CenterEntity) {
                 binding.centerTitle.text = item.name
                 binding.centerDescription.text = item.description
-
+//                binding.root.setOnClickListener {
+//                    onCenterClick(item)  // вызываем callback при клике
+//                }
             }
     }
 

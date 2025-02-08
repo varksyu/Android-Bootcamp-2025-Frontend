@@ -14,9 +14,11 @@ import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.LocationServices
 import ru.sicampus.bootcamp2025.R
 import ru.sicampus.bootcamp2025.databinding.FragmentCenterListBinding
+import ru.sicampus.bootcamp2025.domain.center.CenterEntity
 import ru.sicampus.bootcamp2025.utils.collectWithLifecycle
 
 class CenterListFragment : Fragment(R.layout.fragment_center_list) {
@@ -54,7 +56,9 @@ class CenterListFragment : Fragment(R.layout.fragment_center_list) {
 
         viewBinding.refresh.setOnClickListener{ viewModel.clickRefresh()}
 
-        val adapter = CenterAdapter()
+        val adapter = CenterAdapter()// { center ->
+           // navigateToCenterCard(center)
+        //}
         viewBinding.centerList.adapter = adapter
 
         viewModel.state.collectWithLifecycle(this) { state ->
@@ -75,6 +79,13 @@ class CenterListFragment : Fragment(R.layout.fragment_center_list) {
             }
         }
     }
+
+//    private fun navigateToCenterCard(center: CenterEntity) {
+//        val action = CenterListFragmentDirections
+//            .action_center_view_button_to_centerCardFragment(center) // предполагается, что у вас есть NavGraph с этим действием
+//        findNavController().navigate(action)
+//    }
+
     private fun getLocation() {
         val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val provider = LocationManager.GPS_PROVIDER
@@ -91,6 +102,11 @@ class CenterListFragment : Fragment(R.layout.fragment_center_list) {
         }
     }
 
+    override fun onDestroyView() {
+        _viewBinding = null
+        super.onDestroyView()
+    }
+}
 
 //    private fun getLocation() {
 //        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
@@ -117,8 +133,3 @@ class CenterListFragment : Fragment(R.layout.fragment_center_list) {
 //        }
 //    }
 
-    override fun onDestroyView() {
-        _viewBinding = null
-        super.onDestroyView()
-    }
-}

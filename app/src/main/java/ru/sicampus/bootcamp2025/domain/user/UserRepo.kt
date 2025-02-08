@@ -5,4 +5,5 @@ import ru.sicampus.bootcamp2025.data.user.UserDto
 interface UserRepo {
     suspend fun getUser(id: Long?) : Result<UserEntity>
     suspend fun updateUser(userEntity: UserEntity): Result<Unit>
+    suspend fun getUserList() : Result<List<UserEntity>>
 }

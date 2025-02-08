@@ -15,17 +15,21 @@ import ru.sicampus.bootcamp2025.data.auth.AuthStorageDataSource.token
 class CenterNetworkDataSource {
     suspend fun getCenters(lat : Double? = null, lng : Double? = null): Result<List<CenterDto>> = withContext(Dispatchers.IO) {
         runCatching {
-            Log.d("Zapros", "начал отправлять запросы")
-            val result = client.get("https://localhost:8081/api/center/closest?${lat}&${lng}") {
+            Log.d("Zapros", "Начал отправлять запрос")
+
+            val result = client.get("http://10.0.2.2:8081/api/center") { // "https://10.0.2.2:8081/api/center/closest?lat=$lat&lng=$lng"
                 header(HttpHeaders.Authorization, token)
             }
 
+            Log.d("serverCode", "Response code: ${result.status}")
 
-            Log.d("serverCode", "${result.status}")
             if (result.status != HttpStatusCode.OK) {
-                error("Status ${result.status}")
+                error("Ошибка запроса: Status ${result.status}")
             }
-            Log.d("result", result.bodyAsText())
+
+            val responseBody = result.bodyAsText()
+            Log.d("result", responseBody)
+
             result.body()
         }
     }

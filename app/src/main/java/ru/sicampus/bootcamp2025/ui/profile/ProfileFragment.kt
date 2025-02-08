@@ -1,5 +1,6 @@
 package ru.sicampus.bootcamp2025.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.squareup.picasso.Picasso
 import ru.sicampus.bootcamp2025.R
 import ru.sicampus.bootcamp2025.databinding.FragmentProfileBinding
+import ru.sicampus.bootcamp2025.ui.entry.EntryActivity
 import ru.sicampus.bootcamp2025.utils.collectWithLifecycle
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -26,7 +28,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         viewBinding.refresh.setOnClickListener{ viewModel.clickRefresh() }
         saveMode()
         viewBinding.logout.setOnClickListener{
-
+            val intent = Intent(requireContext(), EntryActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
 
 

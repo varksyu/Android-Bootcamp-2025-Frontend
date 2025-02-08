@@ -12,7 +12,7 @@ class FreeVolunteersListFragment : Fragment(R.layout.fragment_free_volunteers_li
     private var _viewBinding: FragmentFreeVolunteersListBinding? = null
     private val viewBinding: FragmentFreeVolunteersListBinding get() = _viewBinding!!
 
-    private val viewModel by viewModels<FreeVolunteersListViewModel>() //{ TODO() /*FragmentFreeVolounteersViewModel.Factory*/ }
+    private val viewModel by viewModels<FreeVolunteersListViewModel> {  FreeVolunteersListViewModel.Factory }
 
 
 
@@ -43,10 +43,6 @@ class FreeVolunteersListFragment : Fragment(R.layout.fragment_free_volunteers_li
             }
 
         }
-
-
-
-
     }
 
     override fun onDestroyView() {
