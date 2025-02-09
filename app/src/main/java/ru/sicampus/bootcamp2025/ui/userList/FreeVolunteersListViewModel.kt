@@ -12,7 +12,6 @@ import ru.sicampus.bootcamp2025.data.user.UserNetworkDataSource
 import ru.sicampus.bootcamp2025.data.user.UserRepoImpl
 import ru.sicampus.bootcamp2025.domain.user.GetUserUseCase
 import ru.sicampus.bootcamp2025.domain.user.UserEntity
-import ru.sicampus.bootcamp2025.ui.centerList.CenterListViewModel.State
 import ru.sicampus.bootcamp2025.domain.user.GetUserListUseCase
 import androidx.lifecycle.ViewModelProvider
 

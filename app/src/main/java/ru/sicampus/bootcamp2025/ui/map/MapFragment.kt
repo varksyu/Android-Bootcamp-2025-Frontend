@@ -75,22 +75,24 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
         googleMap.setOnMarkerClickListener { marker ->
-            Toast.makeText(requireContext(), "dkfkfk", Toast.LENGTH_LONG).show()
-            val centerName = marker.tag as? String
-            if (centerName != null) {
+            Toast.makeText(requireContext(), "Загрузка центра", Toast.LENGTH_LONG).show()
+            val centerId = marker.tag as? Long
+            val centerName = marker.title as? String
+            if (centerId != null && centerName != null) {
                 val fragment = CenterCardFragment().apply {
                     arguments = Bundle().apply {
+                        putLong("centerId", centerId)
                         putString("centerName", centerName)
                     }
                 }
-                fragment.show(parentFragmentManager, fragment.tag)
+                fragment.show(parentFragmentManager, "CenterCardFragment")
 
             }
             true
 
 
         }
-        // Если данные уже загружены, добавляем маркеры
+
         cachedCenters?.let { centers ->
             addMarkersToMap(centers)
         }
@@ -105,10 +107,10 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                     .position(latLng)
                     .title(center.name)
             )
-            marker?.tag = center.name
-            if (marker != null) {
-                markers[center.name] = marker
-            }
+
+            marker?.tag = center.id // Присваиваем id в теге маркера
+            marker?.let { markers[center.id.toString()] = it } // До
+
         }
         if (centers.isNotEmpty()) {
             val firstCenter = centers.first()

@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.launch
 import ru.sicampus.bootcamp2025.R
 import ru.sicampus.bootcamp2025.databinding.FragmentCenterCardBinding
 import ru.sicampus.bootcamp2025.databinding.FragmentProfileBinding
@@ -17,21 +20,27 @@ class CenterCardFragment: BottomSheetDialogFragment(R.layout.fragment_center_car
     private var _viewBinding: FragmentCenterCardBinding? = null
     private val viewBinding: FragmentCenterCardBinding get() = _viewBinding!!
 
-    private val viewModel by viewModels<CenterCardViewModel>()
+    private val viewModel by viewModels<CenterCardViewModel> { CenterCardViewModel.Factory}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _viewBinding = FragmentCenterCardBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
-        val centerName = arguments?.getString("centerName") // Получаем id центра
-        if (centerName != null) {
-            viewModel.saveName(centerName) // Загружаем данные центра
+        val centerId = arguments?.getLong("centerId")
+        val centerName = arguments?.getString("centerName")
+        if (centerId != null && centerName != null) {
+            viewModel.saveName(centerId, centerName)
         }
 
 
         viewBinding.refresh.setOnClickListener { viewModel.clickRefresh() }
-        viewBinding.close.setOnClickListener { viewModel.clickClose() }
-        viewBinding.joinTheCenter.setOnClickListener { viewModel.joinTheCenter() }
+
+        viewBinding.close.setOnClickListener {}
+
+        viewBinding.joinTheCenter.setOnClickListener {
+            lifecycleScope.launch {
+            viewModel.joinTheCenter()
+        } }
 
 
         val adapter = ActiveVolunteerAdapter()
@@ -52,8 +61,10 @@ class CenterCardFragment: BottomSheetDialogFragment(R.layout.fragment_center_car
                 is CenterCardViewModel.State.Show -> {
                     viewBinding.nameCenter.text = state.item.name
                     viewBinding.description.text = state.item.description
-                    //adapter.submitList(state.item.)
-
+                    adapter.submitList(state.item.users)
+//                    viewModel.volunteers.observe(viewLifecycleOwner) { volunteers ->
+//                        adapter.submitList(volunteers)
+//                    }
                     //if (state.items.avatarUrl != null) Picasso.get().load(state.items.avatarUrl).resize(100, 100).centerCrop().into(viewBinding.avatar)
                 }
 
