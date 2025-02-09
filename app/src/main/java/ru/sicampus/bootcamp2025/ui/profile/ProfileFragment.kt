@@ -68,7 +68,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     viewBinding.email.setText(state.items.email)
                     viewBinding.birthdayData.setText(state.items.birthDate)
                     viewBinding.aboutMe.setText(state.items.description)
-                    //if (state.items.avatarUrl != null) Picasso.get().load(state.items.avatarUrl).resize(100, 100).centerCrop().into(viewBinding.avatar)
+                    if (state.items.avatarUrl != null)  {
+                        Picasso.get().load(state.items.avatarUrl).resize(100, 100).centerCrop().into(viewBinding.avatar)
+                    } else {
+                        Picasso.get().load(R.drawable.ic_profile).resize(100, 100).centerCrop().into(viewBinding.avatar)
+                    }
                 }
                 is ProfileViewModel.State.Error -> {
                     viewBinding.errorText.text = state.text

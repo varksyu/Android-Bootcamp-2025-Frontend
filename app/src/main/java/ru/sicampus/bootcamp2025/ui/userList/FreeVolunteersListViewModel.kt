@@ -29,6 +29,7 @@ class FreeVolunteersListViewModel(
     fun clickRefresh() {
         updateState()
     }
+
     private fun updateState() {
         viewModelScope.launch {
             _state.emit(State.Loading)
@@ -36,11 +37,11 @@ class FreeVolunteersListViewModel(
                 getUserListUseCase.invoke().fold(
                     onSuccess = { data ->
                         Log.d("uraa", "успех успех ${data.toString()}")
-                        ru.sicampus.bootcamp2025.ui.userList.FreeVolunteersListViewModel.State.Show(data)
+                        State.Show(data)
                     },
                     onFailure = { error ->
                         Log.d("kaput", error.message.toString())
-                        ru.sicampus.bootcamp2025.ui.userList.FreeVolunteersListViewModel.State.Error(error.message.toString())
+                        State.Error(error.message.toString())
                     }
                 )
             )

@@ -36,7 +36,6 @@ class CenterCardFragment: BottomSheetDialogFragment(R.layout.fragment_center_car
             setJoinButton(viewModel.isUserJoin())
         }
 
-
         viewBinding.refresh.setOnClickListener { viewModel.clickRefresh() }
 
         viewBinding.joinTheCenter.setOnClickListener {

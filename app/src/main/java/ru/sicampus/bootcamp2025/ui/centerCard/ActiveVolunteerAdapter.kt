@@ -1,5 +1,6 @@
 package ru.sicampus.bootcamp2025.ui.centerCard
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -42,8 +43,5 @@ class ActiveVolunteerAdapter : ListAdapter<UserEntity, ActiveVolunteerAdapter.Vi
         override fun areContentsTheSame(oldItem: UserEntity, newItem: UserEntity): Boolean {
             return oldItem == newItem
         }
-
     }
-
-
 }

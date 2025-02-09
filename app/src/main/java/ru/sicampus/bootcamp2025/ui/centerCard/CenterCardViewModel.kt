@@ -21,6 +21,7 @@ import ru.sicampus.bootcamp2025.domain.center.JoinCenterUseCase
 import ru.sicampus.bootcamp2025.domain.user.GetUserUseCase
 import ru.sicampus.bootcamp2025.domain.user.UserEntity
 import ru.sicampus.bootcamp2025.domain.user.UserRepo
+import ru.sicampus.bootcamp2025.ui.profile.ProfileViewModel
 
 class CenterCardViewModel(
     private val getCenterUseCase : GetCenterUseCase,
@@ -58,8 +59,18 @@ class CenterCardViewModel(
     suspend fun isUserJoin() : Boolean {
         //Log.d("UserCenter", "${getUserUseCase.getUserFromStorage()?.center}")
         //Log.d("isUserJoin", "${getUserUseCase.getUserFromStorage()?.center == name}")
-        if (getUserUseCase.getUserFromStorage()?.center == name) return true
-        return false
+        getUserUseCase.invoke().fold(
+            onSuccess = { data ->
+                Log.d("uraa", "успех успех ${data.toString()}")
+                if (data.center == name) return true
+                else return false
+
+            },
+            onFailure = { error ->
+                Log.d("kaput", error.message.toString())
+                return false
+            }
+        )
     }
 
     fun updateState() {

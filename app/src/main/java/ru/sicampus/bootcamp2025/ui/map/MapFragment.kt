@@ -116,7 +116,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         if (centers.isNotEmpty()) {
             val firstCenter = centers.first()
             val firstLatLng = LatLng(firstCenter.lat ?: 0.0, firstCenter.lng ?: 0.0)
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLatLng, 10f))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(firstLatLng, 14f))
         }
     }
 
