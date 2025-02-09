@@ -32,10 +32,12 @@ class CenterCardFragment: BottomSheetDialogFragment(R.layout.fragment_center_car
             viewModel.saveName(centerId, centerName)
         }
 
+        lifecycleScope.launch {
+            setJoinButton(viewModel.isUserJoin())
+        }
+
 
         viewBinding.refresh.setOnClickListener { viewModel.clickRefresh() }
-
-        viewBinding.close.setOnClickListener {}
 
         viewBinding.joinTheCenter.setOnClickListener {
             lifecycleScope.launch {
@@ -73,6 +75,17 @@ class CenterCardFragment: BottomSheetDialogFragment(R.layout.fragment_center_car
                 }
             }
 
+        }
+    }
+    private fun setJoinButton(setJoin : Boolean) {
+        Log.d("setJoinButton", "$setJoin")
+        if (!setJoin) {
+            viewBinding.joinTheCenter.visibility = View.VISIBLE
+            viewBinding.myCenter.visibility = View.GONE
+        }
+        else {
+            viewBinding.joinTheCenter.visibility = View.GONE
+            viewBinding.myCenter.visibility = View.VISIBLE
         }
     }
 }

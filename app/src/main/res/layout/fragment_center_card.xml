@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="600dp"
+    android:layout_height="700dp"
     android:layout_gravity="bottom"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -68,7 +68,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/close"
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -77,16 +77,16 @@
             android:clickable="true"
             android:src="@drawable/ic_close"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />-->
 
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="68dp"
             android:background="@color/orange"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,11 +94,12 @@
             android:id="@+id/nameCenter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="24dp"
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Название центра" />
@@ -114,6 +115,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="322dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -149,11 +151,41 @@
 
         </LinearLayout>
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/myCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="textMyCenter, imageMyCenter"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/imageMyCenter"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_favorite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        </ImageView>
+
+            <TextView
+                android:id="@+id/textMyCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_center"
+                android:textColor="@color/orange"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageMyCenter"
+                app:layout_constraintStart_toStartOf="@+id/imageMyCenter"
+                app:layout_constraintTop_toBottomOf="@+id/imageMyCenter" />
+
         <Button
             android:id="@+id/join_the_center"
             android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="168dp"
+            android:layout_marginTop="28dp"
             android:backgroundTint="@color/orange"
             android:text="@string/join_the_center"
             android:textSize="14sp"
@@ -161,7 +193,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <TextView
             android:id="@+id/error_join_text"

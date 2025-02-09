@@ -11,10 +11,7 @@ import ru.sicampus.bootcamp2025.data.center.CenterNetworkDataSource
 import ru.sicampus.bootcamp2025.data.center.CenterRepoImpl
 import ru.sicampus.bootcamp2025.domain.center.CenterEntity
 import ru.sicampus.bootcamp2025.domain.center.GetCentersUseCase
-import ru.sicampus.bootcamp2025.domain.user.GetUserUseCase
-import ru.sicampus.bootcamp2025.domain.user.UserEntity
-import ru.sicampus.bootcamp2025.ui.centerList.CenterListViewModel
-import ru.sicampus.bootcamp2025.ui.profile.ProfileViewModel.State
+
 
 class MapViewModel(
     private val getCentersUseCase: GetCentersUseCase

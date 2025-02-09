@@ -75,7 +75,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
         googleMap.setOnMarkerClickListener { marker ->
-            Toast.makeText(requireContext(), "Загрузка центра", Toast.LENGTH_LONG).show()
+            //Toast.makeText(requireContext(), "Загрузка центра", Toast.LENGTH_LONG).show()
             val centerId = marker.tag as? Long
             val centerName = marker.title as? String
             if (centerId != null && centerName != null) {
@@ -107,9 +107,10 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
                     .position(latLng)
                     .title(center.name)
             )
+            //marker?.showInfoWindow()
 
-            marker?.tag = center.id // Присваиваем id в теге маркера
-            marker?.let { markers[center.id.toString()] = it } // До
+            marker?.tag = center.id
+            marker?.let { markers[center.id.toString()] = it }
 
         }
         if (centers.isNotEmpty()) {

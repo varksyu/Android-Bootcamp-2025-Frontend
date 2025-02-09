@@ -10,22 +10,29 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.sicampus.bootcamp2025.data.auth.AuthStorageDataSource
 import ru.sicampus.bootcamp2025.data.center.CenterNetworkDataSource
 import ru.sicampus.bootcamp2025.data.center.CenterRepoImpl
+import ru.sicampus.bootcamp2025.data.user.UserNetworkDataSource
+import ru.sicampus.bootcamp2025.data.user.UserRepoImpl
 import ru.sicampus.bootcamp2025.domain.center.CenterEntity
 import ru.sicampus.bootcamp2025.domain.center.GetCenterUseCase
 import ru.sicampus.bootcamp2025.domain.center.JoinCenterUseCase
+import ru.sicampus.bootcamp2025.domain.user.GetUserUseCase
 import ru.sicampus.bootcamp2025.domain.user.UserEntity
+import ru.sicampus.bootcamp2025.domain.user.UserRepo
 
 class CenterCardViewModel(
     private val getCenterUseCase : GetCenterUseCase,
-    private val joinCenterUseCase : JoinCenterUseCase
+    private val joinCenterUseCase : JoinCenterUseCase,
+    private val getUserUseCase: GetUserUseCase
 ) : ViewModel(){
     private val _state = MutableStateFlow<State>(State.Loading)
     val state = _state.asStateFlow()
 
     private val _volunteers = MutableLiveData<List<UserEntity>>()
     val volunteers: LiveData<List<UserEntity>> get() = _volunteers
+
 
     private var id : Long? = null
     private var name : String? = null
@@ -48,11 +55,17 @@ class CenterCardViewModel(
     fun clickRefresh() {
         updateState()
     }
+    suspend fun isUserJoin() : Boolean {
+        //Log.d("UserCenter", "${getUserUseCase.getUserFromStorage()?.center}")
+        //Log.d("isUserJoin", "${getUserUseCase.getUserFromStorage()?.center == name}")
+        if (getUserUseCase.getUserFromStorage()?.center == name) return true
+        return false
+    }
 
     fun updateState() {
         viewModelScope.launch {
             _state.emit(State.Loading)
-            delay(5_000)
+            //delay(2_000)
             if (id == null) {
                 _state.emit(State.Error("Центр не найден"))
             } else {
@@ -108,6 +121,12 @@ class CenterCardViewModel(
                         repo = CenterRepoImpl(
                             centerNetworkDataSource = CenterNetworkDataSource()
                         )
+                    ),
+                    getUserUseCase = GetUserUseCase(
+                        repo = UserRepoImpl(
+                            userNetworkDataSource = UserNetworkDataSource()
+                        ),
+                        authStorageDataSource = AuthStorageDataSource
                     )
                 ) as T
             }
