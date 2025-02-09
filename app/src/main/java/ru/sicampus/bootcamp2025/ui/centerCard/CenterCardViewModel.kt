@@ -1,6 +1,9 @@
 package ru.sicampus.bootcamp2025.ui.centerCard
 
+import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +24,7 @@ import ru.sicampus.bootcamp2025.domain.center.JoinCenterUseCase
 import ru.sicampus.bootcamp2025.domain.user.GetUserUseCase
 import ru.sicampus.bootcamp2025.domain.user.UserEntity
 import ru.sicampus.bootcamp2025.domain.user.UserRepo
+import ru.sicampus.bootcamp2025.ui.profile.ProfileFragment
 import ru.sicampus.bootcamp2025.ui.profile.ProfileViewModel
 
 class CenterCardViewModel(
@@ -30,6 +34,12 @@ class CenterCardViewModel(
 ) : ViewModel(){
     private val _state = MutableStateFlow<State>(State.Loading)
     val state = _state.asStateFlow()
+
+    private val _toastMessage = MutableStateFlow<Boolean>(false)
+    val toastMessage = _toastMessage.asStateFlow()
+
+    private val _updateProfile = MutableStateFlow<Boolean>(false)
+    val updateProfile = _updateProfile.asStateFlow()
 
     private val _volunteers = MutableLiveData<List<UserEntity>>()
     val volunteers: LiveData<List<UserEntity>> get() = _volunteers
@@ -96,15 +106,29 @@ class CenterCardViewModel(
         }
     }
 
+    fun resetToastMessage() {
+        _toastMessage.value = false
+    }
+    fun resetUpdateProfile() {
+        _updateProfile.value = false
+    }
+
     suspend fun joinTheCenter() {
         joinCenterUseCase.invoke(name!!).fold(
             onSuccess = { data ->
                 Log.d("join", "Пользователь присоединен")
+                _toastMessage.value = true
+                _updateProfile.value = true
+
             },
             onFailure = { error ->
                 Log.d("join", error.message.toString())
             }
         )
+        updateState()
+
+        //CenterCardFragment.joinNotification()
+
     }
 
 

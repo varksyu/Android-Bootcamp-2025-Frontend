@@ -106,6 +106,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         viewBinding.aboutMe.isFocusable = true
     }
 
+
+    private fun recreateFragment() {
+        val fragmentManager = parentFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.detach(this).attach(this).commit()
+    }
+
     override fun onDestroyView() {
         _viewBinding = null
         super.onDestroyView()

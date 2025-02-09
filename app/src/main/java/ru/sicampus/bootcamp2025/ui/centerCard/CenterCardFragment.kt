@@ -3,6 +3,7 @@ package ru.sicampus.bootcamp2025.ui.centerCard
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
@@ -44,6 +45,28 @@ class CenterCardFragment: BottomSheetDialogFragment(R.layout.fragment_center_car
             viewModel.joinTheCenter()
         } }
 
+        viewModel.toastMessage.collectWithLifecycle(viewLifecycleOwner) { showToast ->
+            if (showToast) {
+                Toast.makeText(requireContext(), "Вы успешно присоединились к центру!", Toast.LENGTH_SHORT).show()
+                viewModel.resetToastMessage()
+            }
+        }
+        /*viewModel.updateProfile.collectWithLifecycle(viewLifecycleOwner) { update ->
+            if (update) {
+                val fragmentManager = requireActivity().supportFragmentManager
+                val profileFragment = fragmentManager.findFragmentByTag("ProfileFragment")
+
+                profileFragment?.let {
+                    fragmentManager.beginTransaction()
+                        .detach(it)
+                        .attach(it)
+                        .commit()
+                }
+                Log.d("reset", "dkfdff")
+                viewModel.resetUpdateProfile()
+            }
+        }*/
+
 
         val adapter = ActiveVolunteerAdapter()
         viewBinding.activeVolunteersList.adapter = adapter
@@ -77,6 +100,7 @@ class CenterCardFragment: BottomSheetDialogFragment(R.layout.fragment_center_car
 
         }
     }
+
     private fun setJoinButton(setJoin : Boolean) {
         Log.d("setJoinButton", "$setJoin")
         if (!setJoin) {
