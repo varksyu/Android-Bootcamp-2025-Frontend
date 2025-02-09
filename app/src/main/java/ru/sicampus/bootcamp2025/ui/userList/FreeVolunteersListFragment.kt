@@ -23,6 +23,8 @@ class FreeVolunteersListFragment : Fragment(R.layout.fragment_free_volunteers_li
 
         viewBinding.refresh.setOnClickListener {  viewModel.clickRefresh()}
 
+
+
         val adapter = VolunteerAdapter()
         viewBinding.freeVolunteersList.adapter = adapter
 

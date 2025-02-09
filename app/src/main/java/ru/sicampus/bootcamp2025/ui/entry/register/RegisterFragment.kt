@@ -55,7 +55,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         viewModel.state.collectWithLifecycle(this) { state ->
             if (state is RegisterViewModel.State.Show) {
                 viewBinding.errorText.text = state.errorText.toString()
-                viewBinding.errorText.visibility = View.GONE
+                viewBinding.errorText.visibility = if (state.errorText == null) View.GONE else View.VISIBLE
             }
 
         }

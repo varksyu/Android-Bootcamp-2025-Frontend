@@ -21,7 +21,10 @@ class AuthRepoImpl(
         val userInfo = authNetworkDataSource.login(token).onFailure {
             authStorageDataSource.clear()
         }
-        authStorageDataSource.updateUserInfo(userInfo)
+        if (userInfo.isSuccess){
+            authStorageDataSource.updateUserInfo(userInfo)
+        }
+
         return userInfo
     }
 

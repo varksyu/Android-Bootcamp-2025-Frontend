@@ -68,10 +68,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     viewBinding.email.setText(state.items.email)
                     viewBinding.birthdayData.setText(state.items.birthDate)
                     viewBinding.aboutMe.setText(state.items.description)
-                    if (state.items.avatarUrl != null)  {
+                    val avatar = state.items.avatarUrl
+                    if (state.items.avatarUrl != null && state.items.avatarUrl != "")  {
                         Picasso.get().load(state.items.avatarUrl).resize(100, 100).centerCrop().into(viewBinding.avatar)
-                    } else {
-                        Picasso.get().load(R.drawable.ic_profile).resize(100, 100).centerCrop().into(viewBinding.avatar)
                     }
                 }
                 is ProfileViewModel.State.Error -> {
@@ -99,8 +98,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun editMode() {
         viewBinding.edit.visibility = View.GONE
         viewBinding.save.visibility = View.VISIBLE
-        viewBinding.email.isFocusable = true
-        viewBinding.email.isFocusableInTouchMode = true
+        viewBinding.email.isFocusable = false
+        viewBinding.email.isFocusableInTouchMode = false
         viewBinding.birthdayData.isFocusableInTouchMode = true
         viewBinding.birthdayData.isFocusable = true
         viewBinding.aboutMe.isFocusableInTouchMode = true

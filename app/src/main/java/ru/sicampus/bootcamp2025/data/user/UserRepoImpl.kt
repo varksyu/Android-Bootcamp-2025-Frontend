@@ -1,5 +1,6 @@
 package ru.sicampus.bootcamp2025.data.user
 
+import ru.sicampus.bootcamp2025.data.auth.AuthStorageDataSource
 import ru.sicampus.bootcamp2025.domain.user.UserEntity
 import ru.sicampus.bootcamp2025.domain.user.UserRepo
 
@@ -25,6 +26,7 @@ class UserRepoImpl (
             }
         }
     override suspend fun updateUser(userEntity: UserEntity): Result<Unit> {
+
         return userNetworkDataSource.updateUser(userEntity.id, UserDto(
             userEntity.id,
             email = userEntity.email,

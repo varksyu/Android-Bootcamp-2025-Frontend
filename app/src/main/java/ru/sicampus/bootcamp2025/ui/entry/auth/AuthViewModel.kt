@@ -2,6 +2,7 @@ package ru.sicampus.bootcamp2025.ui.entry.auth
 
 import android.app.Application
 import android.util.Log
+import android.util.Patterns
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -100,6 +101,13 @@ class AuthViewModel(
         return State.Show(
             errorText = error
         )
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+    private fun isValidPassword(password : String) : Boolean {
+        return password.length >= 8
     }
 
     fun changeLogin() {

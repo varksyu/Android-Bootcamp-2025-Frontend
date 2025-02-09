@@ -32,8 +32,10 @@ class ActiveVolunteerAdapter : ListAdapter<UserEntity, ActiveVolunteerAdapter.Vi
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item : UserEntity) {
             binding.nameVolunteer.text = item.name
-            Picasso.get().load(item.avatarUrl).resize(100, 100).centerCrop().into(binding.photoVolunteer)
-        }
+            if (item.avatarUrl != null && item.avatarUrl != "") {
+                Picasso.get().load(item.avatarUrl).resize(100, 100).centerCrop().into(binding.photoVolunteer)
+                }
+            }
     }
     object VolunteerDiff : DiffUtil.ItemCallback<UserEntity>() {
         override fun areItemsTheSame(oldItem: UserEntity, newItem: UserEntity): Boolean {

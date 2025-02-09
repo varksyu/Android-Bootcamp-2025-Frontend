@@ -59,13 +59,12 @@ class RegisterViewModel(
     }
 
     private suspend fun checkUserExistence(email: String):Boolean?{
-        return try {
-            val result = isUserExistUseCase(email)
+        return try { val result = isUserExistUseCase(email)
             result.fold(
-                onSuccess = {isExist -> isExist},
+                onSuccess = {isExist -> return isExist},
                 onFailure = {
                     Log.e("AuthViewModel", "Error checking user existence", it)
-                    null
+                    return null
                 }
             )
         } catch (e: Exception) {
