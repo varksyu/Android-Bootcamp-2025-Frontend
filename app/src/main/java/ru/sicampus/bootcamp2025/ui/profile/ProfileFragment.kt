@@ -107,12 +107,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
 
-    private fun recreateFragment() {
-        val fragmentManager = parentFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.detach(this).attach(this).commit()
-    }
-
     override fun onDestroyView() {
         _viewBinding = null
         super.onDestroyView()
